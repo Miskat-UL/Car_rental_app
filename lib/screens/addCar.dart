@@ -62,12 +62,14 @@ class _AddCarsState extends State<AddCars> {
             child: const Text("Add Car"),
             onPressed: () async{
               await CarsDatabse.instance.create(
+                
                 Cars(
                   name: _nameController.text,
                   model: _modelController.text,
                   image: _imageController.text,
                   details: _detailsController.text,
                 ),
+                // 'hello',
               );
               Navigator.push(
                 context,

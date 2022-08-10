@@ -29,7 +29,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
 
   @override
   void initState() {
-    refreshCars();
+    _refreshCars();
     super.initState();
   }
 
@@ -39,7 +39,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
     super.dispose();
   }
 
-  Future refreshCars() async {
+  _refreshCars() async {
     setState(() => isWaiting = true);
 
     cars = await CarsDatabse.instance.getAll();
@@ -116,219 +116,221 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFEEEEEE),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const CircleAvatar(
-                    radius: 30,
-                    backgroundImage: NetworkImage(
-                      'https://m.media-amazon.com/images/M/MV5BMDI2ZmQ2N2EtZTMwMC00YWVmLWEyMTMtNTZiMGEyNzNhMWM5XkEyXkFqcGdeQXZ3ZXNsZXk@._V1_.jpg',
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const CircleAvatar(
+                      radius: 30,
+                      backgroundImage: NetworkImage(
+                        'https://m.media-amazon.com/images/M/MV5BMDI2ZmQ2N2EtZTMwMC00YWVmLWEyMTMtNTZiMGEyNzNhMWM5XkEyXkFqcGdeQXZ3ZXNsZXk@._V1_.jpg',
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        const Text("INR 1434.21"),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.add),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 20.0),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                  ),
+                ),
+                child: Column(children: [
+                  Container(
+                    child: CarouselSlider(
+                      items: imageSliders,
+                      carouselController: _controller,
+                      options: CarouselOptions(
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                          aspectRatio: 2.0,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _current = index;
+                            });
+                          }),
                     ),
                   ),
                   Row(
-                    children: [
-                      const Text("INR 1434.21"),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 20.0),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-              ),
-              child: Column(children: [
-                Container(
-                  child: CarouselSlider(
-                    items: imageSliders,
-                    carouselController: _controller,
-                    options: CarouselOptions(
-                        autoPlay: true,
-                        enlargeCenterPage: true,
-                        aspectRatio: 2.0,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            _current = index;
-                          });
-                        }),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: imgList.asMap().entries.map((entry) {
-                    return GestureDetector(
-                      onTap: () => _controller.animateToPage(entry.key),
-                      child: Container(
-                        width: 12.0,
-                        height: 12.0,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 4.0),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color:
-                                (Theme.of(context).brightness == Brightness.dark
-                                        ? Colors.white
-                                        : Colors.black)
-                                    .withOpacity(
-                                        _current == entry.key ? 0.9 : 0.4)),
-                      ),
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Weeding destination",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: imgList.asMap().entries.map((entry) {
+                      return GestureDetector(
+                        onTap: () => _controller.animateToPage(entry.key),
+                        child: Container(
+                          width: 12.0,
+                          height: 12.0,
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 4.0),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: (Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : Colors.black)
+                                  .withOpacity(
+                                      _current == entry.key ? 0.9 : 0.4)),
                         ),
-                      ),
-                      TextButton.icon(
-                        style: TextButton.styleFrom(
-                          // backgroundColor: Colors.amber,
-                          textStyle: const TextStyle(
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Weeding destination",
+                          style: TextStyle(
                             fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        onPressed: () {},
-                        icon: Icon(Icons.arrow_circle_right),
-                        label: Text("See all"),
-                      )
-                    ],
-                  ),
-                ),
-              ]),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: 340,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              decoration: const BoxDecoration(
-                color: Color(0xFF0378DD),
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-              ),
-              height: 80,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 9.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            'Available Destination',
-                            style: TextStyle(
+                        TextButton.icon(
+                          style: TextButton.styleFrom(
+                            // backgroundColor: Colors.amber,
+                            textStyle: const TextStyle(
                               fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Roboto',
-                              letterSpacing: 1,
                             ),
                           ),
-                          Text(
-                            'See our most viewed place',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Roboto',
-                              letterSpacing: 1,
-                            ),
-                          ),
-                        ],
-                      ),
+                          onPressed: () {},
+                          icon: Icon(Icons.arrow_circle_right),
+                          label: Text("See all"),
+                        )
+                      ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 8),
-                      height: 50,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      child: IconButton(
-                        iconSize: 35,
-                        icon: Icon(Icons.arrow_right_alt_rounded),
-                        onPressed: () {},
-                      ),
-                    ),
-                  )
-                ],
+                ]),
               ),
-            ),
-            // SingleChildScrollView(
-            //   child: Row(
-            //     children: [
-            //       SingleCars(
-            //         picture: 'assets/1.png',
-            //         title: 'Car 1',
-            //         name: 'homelander',
-            //       ),
-            //       SizedBox(
-            //         width: 10,
-            //       ),
-            //       SingleCars(
-            //         picture: 'assets/1.png',
-            //         title: 'Car 1',
-            //         name: 'homelander',
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            isWaiting
-                ? Center(child: CircularProgressIndicator())
-                : Container(
-                    height: 250,
-                    child: ListView.builder(
-                        itemCount: cars!.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SingleCar(
-                                          cars: categoryList[index])));
-                            },
-                            child: SingleCars(
-                              name: cars![index].name,
-                              picture: cars![index].image,
-                              title: cars![index].model,
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: 340,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                decoration: const BoxDecoration(
+                  color: Color(0xFF0378DD),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                height: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 9.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              'Available Destination',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Roboto',
+                                letterSpacing: 1,
+                              ),
                             ),
-                          );
-                        }),
-                  ),
-            TextButton(onPressed: () async {}, child: Icon(Icons.add)),
-          ],
+                            Text(
+                              'See our most viewed place',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Roboto',
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 8),
+                        height: 50,
+                        width: 50,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: IconButton(
+                          iconSize: 35,
+                          icon: Icon(Icons.arrow_right_alt_rounded),
+                          onPressed: () {},
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              // SingleChildScrollView(
+              //   child: Row(
+              //     children: [
+              //       SingleCars(
+              //         picture: 'assets/1.png',
+              //         title: 'Car 1',
+              //         name: 'homelander',
+              //       ),
+              //       SizedBox(
+              //         width: 10,
+              //       ),
+              //       SingleCars(
+              //         picture: 'assets/1.png',
+              //         title: 'Car 1',
+              //         name: 'homelander',
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              isWaiting
+                  ? Center(child: CircularProgressIndicator())
+                  : Container(
+                      height: 250,
+                      child: ListView.builder(
+                          itemCount: cars!.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SingleCar(
+                                            cars: categoryList[index])));
+                              },
+                              child: SingleCars(
+                                name: cars![index].name,
+                                picture: cars![index].image,
+                                title: cars![index].model,
+                              ),
+                            );
+                          }),
+                    ),
+              TextButton(onPressed: () async {}, child: Icon(Icons.add)),
+            ],
+          ),
         ),
       ),
     );
