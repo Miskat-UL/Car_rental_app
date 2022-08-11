@@ -47,16 +47,19 @@ class _MyHomePageState extends State<MyHomePage> {
         onPageChanged: onPageChanged,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0XFFc4e8c2),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
               color: Colors.black,
             ),
-            label: '',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.search, color: Colors.black), label: 'Search'),
+            icon: Icon(Icons.search, color: Colors.black),
+            label: 'Search',
+          ),
         ],
         onTap: pageChanger,
       ),

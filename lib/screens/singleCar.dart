@@ -13,7 +13,7 @@ class _SingleCarState extends State<SingleCar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFCDE4F8),
+        backgroundColor: Color(0xFFc4e8c2),
         appBar: AppBarBuilder(context),
         body: Stack(
           children: [
@@ -52,8 +52,11 @@ class _SingleCarState extends State<SingleCar> {
                             ],
                           ),
                         ),
-                        Image.asset(
-                          widget.cars.image,
+                        Hero(
+                          tag: "carHero",
+                          child: Image.asset(
+                            widget.cars.image,
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -118,7 +121,7 @@ class _SingleCarState extends State<SingleCar> {
                                     height: 100,
                                     width: 100,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF0377DD),
+                                      color: Color(0xFF6bbd99),
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
                                         color: Colors.grey,
@@ -249,7 +252,7 @@ class _SingleCarState extends State<SingleCar> {
                                   ),
                                 ),
                                 Text(
-                                  widget.cars.details,
+                                  'widget.cars.details',
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -393,7 +396,7 @@ class _SingleCarState extends State<SingleCar> {
                       height: 40,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Color(0xFFCDE4F8),
+                        color: Color(0xFFc4e8c2),
                       ),
                       child: TextButton(
                         onPressed: () {},
@@ -433,7 +436,7 @@ class _SingleCarState extends State<SingleCar> {
           margin: const EdgeInsets.symmetric(vertical: 7),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.blue,
+            color: Color(0XFF6bbd99),
           ),
           child: IconButton(
             icon: const Icon(Icons.search),
@@ -447,7 +450,7 @@ class _SingleCarState extends State<SingleCar> {
           margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.blue,
+            color: Color(0XFF6bbd99),
           ),
           child: IconButton(
             onPressed: () {},

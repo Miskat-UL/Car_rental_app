@@ -1,6 +1,7 @@
 import 'package:car_rental_app/database/database.dart';
 import 'package:car_rental_app/firebase_options.dart';
 import 'package:car_rental_app/models/cars.dart';
+import 'package:car_rental_app/screens/addCar.dart';
 import 'package:car_rental_app/screens/home.dart';
 import 'package:car_rental_app/screens/login.dart';
 import 'package:car_rental_app/screens/register.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            return const Root();
+            return AddCars();
           } else {
             return const Center(
               child: CircularProgressIndicator(),

@@ -71,11 +71,11 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
     final List<Widget> imageSliders = imgList
         .map((item) => GestureDetector(
               onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => MyHomePage()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const MyHomePage()));
               },
               child: Container(
-                margin: EdgeInsets.all(5.0),
+                margin: const EdgeInsets.all(5.0),
                 child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     child: Stack(
@@ -115,7 +115,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
         .toList();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEEEEEE),
+      backgroundColor: Color(0XFFc4e8c2),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -144,7 +144,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 20.0),
+                padding: EdgeInsets.only(top: 30),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -203,6 +203,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
+                            color: Color(0XFF46a094),
                           ),
                         ),
                         TextButton.icon(
@@ -213,8 +214,16 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                             ),
                           ),
                           onPressed: () {},
-                          icon: Icon(Icons.arrow_circle_right),
-                          label: Text("See all"),
+                          icon: const Icon(
+                            Icons.arrow_circle_right,
+                            color: Colors.black,
+                          ),
+                          label: const Text(
+                            "See all",
+                            style: TextStyle(
+                              color: Color(0XFF46a094),
+                            ),
+                          ),
                         )
                       ],
                     ),
@@ -228,7 +237,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                 width: 340,
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 decoration: const BoxDecoration(
-                  color: Color(0xFF0378DD),
+                  color: Color(0xFF6bbd99),
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 height: 80,
@@ -277,7 +286,10 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                         ),
                         child: IconButton(
                           iconSize: 35,
-                          icon: Icon(Icons.arrow_right_alt_rounded),
+                          icon: const Icon(
+                            Icons.arrow_right_alt_rounded,
+                            color: Color(0XFF6bbd99),
+                          ),
                           onPressed: () {},
                         ),
                       ),
@@ -317,8 +329,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => SingleCar(
-                                            cars: categoryList[index])));
+                                        builder: (context) =>
+                                            SingleCar(cars: cars![index])));
                               },
                               child: SingleCars(
                                 name: cars![index].name,
@@ -372,14 +384,14 @@ class SingleCars extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 10, top: 10),
                   width: 70,
                   decoration: const BoxDecoration(
-                    color: Color(0xFFCDE4F8),
+                    color: Color(0xFFc4e8c2),
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                   child: const Center(
                     child: Text(
                       'Booked',
                       style: TextStyle(
-                        color: Color.fromARGB(255, 11, 137, 240),
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -389,7 +401,7 @@ class SingleCars extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(top: 10),
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Image.asset(picture),
+              child: Hero(tag: "carHero", child: Image.asset(picture)),
             ),
             const SizedBox(
               height: 5,

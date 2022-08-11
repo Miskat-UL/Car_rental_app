@@ -23,63 +23,123 @@ class _AddCarsState extends State<AddCars> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Car"),
+        backgroundColor: Color(0XFFc4e8c2),
+        centerTitle: true,
+        title: const Text("Add Car"),
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          TextField(
-            controller: _nameController,
-            decoration: InputDecoration(
-              labelText: "Car Name",
-              border: OutlineInputBorder(),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          TextField(
-            controller: _modelController,
-            decoration: InputDecoration(
-              labelText: "Car Model",
-              border: OutlineInputBorder(),
-            ),
-          ),
-          TextField(
-            controller: _imageController,
-            decoration: InputDecoration(
-              labelText: "Car image",
-              border: OutlineInputBorder(),
-            ),
-          ),
-          TextField(
-            controller: _detailsController,
-            decoration: InputDecoration(
-              labelText: "Car details",
-              border: OutlineInputBorder(),
-            ),
-          ),
-          TextButton(
-            child: const Text("Add Car"),
-            onPressed: () async{
-              await CarsDatabse.instance.create(
-                
-                Cars(
-                  name: _nameController.text,
-                  model: _modelController.text,
-                  image: _imageController.text,
-                  details: _detailsController.text,
+            TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0XFF46a094),
+                    width: 2,
+                  ),
                 ),
-                // 'hello',
-              );
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyHomePage(),
+                labelText: "Car Name",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextField(
+              controller: _modelController,
+              decoration: const InputDecoration(
+                labelText: "Car Model",
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0XFF46a094),
+                    width: 2,
+                  ),
                 ),
-              );
-            },
-          ),
-        ],
+                // enabledBorder: OutlineInputBorder(
+                //   borderSide: BorderSide(
+                //     color: Color(0XFF46a094),
+                //     width: 2,
+                //   ),
+                // ),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextField(
+              controller: _imageController,
+              decoration: const InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0XFF46a094),
+                    width: 2,
+                  ),
+                ),
+                labelText: "Car image",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextField(
+              controller: _detailsController,
+              decoration: const InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0XFF46a094),
+                    width: 2,
+                  ),
+                ),
+                labelText: "Car details",
+                // labelStyle: ,
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 30),
+              decoration: BoxDecoration(
+                color: const Color(0XFF6bbd99),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: TextButton(
+                child: const Text(
+                  "Add Car",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: () async {
+                  await CarsDatabse.instance.create(
+                    Cars(
+                      name: _nameController.text,
+                      model: _modelController.text,
+                      image: _imageController.text,
+                      details: _detailsController.text,
+                    ),
+                    // 'hello',
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyHomePage(),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
