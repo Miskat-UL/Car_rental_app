@@ -19,6 +19,9 @@ class _AddCarsState extends State<AddCars> {
   final TextEditingController _detailsController = TextEditingController();
   final TextEditingController _imageController = TextEditingController();
   final TextEditingController _modelController = TextEditingController();
+  static const snackBarR = SnackBar(
+    content: Text('Car Added'),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,12 +132,8 @@ class _AddCarsState extends State<AddCars> {
                     ),
                     // 'hello',
                   );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyHomePage(),
-                    ),
-                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBarR);
+                  
                 },
               ),
             ),

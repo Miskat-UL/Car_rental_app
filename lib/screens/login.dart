@@ -1,16 +1,23 @@
 import 'package:car_rental_app/screens/home.dart';
 import 'package:car_rental_app/screens/register.dart';
+import 'package:car_rental_app/service/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
-
+  const Login({super.key, required this.auth});
+  final FirebaseAuth auth;
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  static const snackBarR = SnackBar(
+    content: Text('Successful Login!'),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +40,8 @@ class _LoginState extends State<Login> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const TextField(
+                    TextField(
+                      controller: _emailController,
                       decoration: InputDecoration(
                         hintText: 'Enter your email',
                         focusColor: Color(0XFF46a094),
@@ -42,7 +50,8 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const TextField(
+                    TextField(
+                      controller: _passwordController,
                       decoration: InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(color: Color(0XFF46a094)),
@@ -59,11 +68,20 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const MyHomePage()),
-                            );
+                          onPressed: () async {
+                            String res = await Auth(auth: widget.auth).signIn(
+                                email: _emailController.text,
+                                password: _passwordController.text);
+                            if (res == "success") {
+                              _emailController.clear();
+                              _passwordController.clear();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBarR);
+                              Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                builder: (_) => MyHomePage(auth: widget.auth),
+                              ));
+                            }
                           },
                           child: const Text(
                             'Login',
@@ -88,7 +106,9 @@ class _LoginState extends State<Login> {
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                                builder: (context) => const Register()),
+                                builder: (context) => Register(
+                                      auth: widget.auth,
+                                    )),
                           );
                         },
                         child: const Text(

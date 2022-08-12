@@ -1,16 +1,23 @@
 import 'package:car_rental_app/screens/home.dart';
 import 'package:car_rental_app/screens/login.dart';
+import 'package:car_rental_app/service/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Register extends StatefulWidget {
-  const Register({super.key});
-
+  const Register({super.key, required this.auth});
+  final FirebaseAuth auth;
   @override
   State<Register> createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  static const snackBarR = SnackBar(
+    content: Text('Successfully registered!'),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,8 +49,9 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const TextField(
-                      decoration: InputDecoration(
+                    TextField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
                         hintText: 'Enter your email',
                         focusColor: Color(0XFF46a094),
                         hintStyle: TextStyle(color: Color(0XFF46a094)),
@@ -51,8 +59,9 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const TextField(
-                      decoration: InputDecoration(
+                    TextField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(color: Color(0XFF46a094)),
                         focusColor: Color(0XFF46a094),
@@ -68,11 +77,26 @@ class _RegisterState extends State<Register> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const MyHomePage()),
+                          onPressed: () async {
+                            String res =
+                                await Auth(auth: widget.auth).createAccount(
+                              email: _emailController.text,
+                              password: _passwordController.text,
                             );
+                            if (res == "success") {
+                              _emailController.clear();
+                              _passwordController.clear();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                snackBarR,
+                              );
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => Login(
+                                    auth: widget.auth,
+                                  ),
+                                ),
+                              );
+                            }
                           },
                           child: const Text(
                             'Register',
@@ -97,7 +121,9 @@ class _RegisterState extends State<Register> {
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                              builder: (context) => const Login()),
+                              builder: (context) => Login(
+                                    auth: widget.auth,
+                                  )),
                         );
                       },
                       child: const Text(

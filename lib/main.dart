@@ -36,10 +36,12 @@ class MyApp extends StatelessWidget {
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            return AddCars();
+            return Root();
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Color(0XFF46a094),
+              ),
             );
           }
         },
@@ -65,9 +67,9 @@ class _RootState extends State<Root> {
         builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.data?.uid == null) {
-              return Login();
+              return Login(auth: _auth);
             } else {
-              return MyHomePage();
+              return MyHomePage(auth: _auth);
             }
           }
           return const Scaffold(

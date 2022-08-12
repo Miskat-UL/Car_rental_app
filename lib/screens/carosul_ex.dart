@@ -2,6 +2,8 @@ import 'package:car_rental_app/database/database.dart';
 import 'package:car_rental_app/models/cars.dart';
 import 'package:car_rental_app/screens/home.dart';
 import 'package:car_rental_app/screens/singleCar.dart';
+import 'package:car_rental_app/service/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -26,7 +28,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   List<Cars>? cars;
   bool isWaiting = false;
   final CarouselController _controller = CarouselController();
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     _refreshCars();
@@ -70,10 +72,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   Widget build(BuildContext context) {
     final List<Widget> imageSliders = imgList
         .map((item) => GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const MyHomePage()));
-              },
+              onTap: () {},
               child: Container(
                 margin: const EdgeInsets.all(5.0),
                 child: ClipRRect(
@@ -135,7 +134,9 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                       children: [
                         const Text("INR 1434.21"),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await Auth(auth: _auth).signOut();
+                          },
                           icon: const Icon(Icons.add),
                         ),
                       ],
