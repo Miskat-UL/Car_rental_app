@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/cars.dart';
+import '../../models/cars.dart';
 
 class SingleCar extends StatefulWidget {
   const SingleCar({super.key, required this.cars});

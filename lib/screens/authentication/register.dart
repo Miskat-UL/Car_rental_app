@@ -1,6 +1,7 @@
-import 'package:car_rental_app/screens/home.dart';
-import 'package:car_rental_app/screens/login.dart';
+import 'package:car_rental_app/screens/user/home.dart';
+import 'package:car_rental_app/screens/authentication/login.dart';
 import 'package:car_rental_app/service/auth.dart';
+import 'package:car_rental_app/service/userHelperDatabase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,8 +19,22 @@ class _RegisterState extends State<Register> {
   static const snackBarR = SnackBar(
     content: Text('Successfully registered!'),
   );
+  String role = 'user';
+  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Color(0XFF46a094);
+      }
+      return Color(0XFF46a094);
+    }
+
     return Scaffold(
       backgroundColor: const Color(0XFFc4e8c2),
       body: Container(
@@ -70,6 +85,27 @@ class _RegisterState extends State<Register> {
                     ),
                     const SizedBox(height: 20),
                     Container(
+                      child: Row(
+                        children: [
+                          Text(
+                            'SignUp As Admin? ',
+                            style: TextStyle(
+                              color: Color(0XFF46a094),
+                            ),
+                          ),
+                          Checkbox(
+                            value: isChecked,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                isChecked = value!;
+                                role = 'admin';
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 70, vertical: 5),
                       decoration: BoxDecoration(
@@ -86,6 +122,8 @@ class _RegisterState extends State<Register> {
                             if (res == "success") {
                               _emailController.clear();
                               _passwordController.clear();
+                              UserHelper.saveUser(
+                                  widget.auth.currentUser, role);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 snackBarR,
                               );

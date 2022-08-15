@@ -1,7 +1,7 @@
 import 'package:car_rental_app/database/database.dart';
 import 'package:car_rental_app/models/cars.dart';
-import 'package:car_rental_app/screens/home.dart';
-import 'package:car_rental_app/screens/singleCar.dart';
+import 'package:car_rental_app/screens/user/home.dart';
+import 'package:car_rental_app/screens/user/singleCar.dart';
 import 'package:car_rental_app/service/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

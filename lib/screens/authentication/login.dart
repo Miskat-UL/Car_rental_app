@@ -1,5 +1,5 @@
-import 'package:car_rental_app/screens/home.dart';
-import 'package:car_rental_app/screens/register.dart';
+import 'package:car_rental_app/screens/user/home.dart';
+import 'package:car_rental_app/screens/authentication/register.dart';
 import 'package:car_rental_app/service/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -77,10 +77,10 @@ class _LoginState extends State<Login> {
                               _passwordController.clear();
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBarR);
-                              Navigator.of(context)
-                                  .pushReplacement(MaterialPageRoute(
-                                builder: (_) => MyHomePage(auth: widget.auth),
-                              ));
+                              // Navigator.of(context)
+                              //     .pushReplacement(MaterialPageRoute(
+                              //   builder: (_) => MyHomePage(auth: widget.auth),
+                              // ));
                             }
                           },
                           child: const Text(
