@@ -1,14 +1,13 @@
-import 'package:car_rental_app/database/database.dart';
+
 import 'package:car_rental_app/firebase_options.dart';
-import 'package:car_rental_app/models/cars.dart';
-import 'package:car_rental_app/screens/admin/addCar.dart';
+
 import 'package:car_rental_app/screens/admin/admin_home.dart';
+import 'package:car_rental_app/screens/user/blog_page.dart';
 import 'package:car_rental_app/screens/user/home.dart';
 import 'package:car_rental_app/screens/authentication/login.dart';
-import 'package:car_rental_app/screens/authentication/register.dart';
-import 'package:car_rental_app/screens/user/singleCar.dart';
+
 import 'package:car_rental_app/service/auth.dart';
-import 'package:car_rental_app/service/userHelperDatabase.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            return Root();
+            return BlogUi();
           } else {
             return const Center(
               child: CircularProgressIndicator(
