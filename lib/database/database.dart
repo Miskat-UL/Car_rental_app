@@ -5,8 +5,8 @@ import 'package:sqflite/sqflite.dart';
 
 class CarsDatabse {
   static final CarsDatabse instance = CarsDatabse._init();
-  static Database? _database;
-
+  static Database?  _database;
+  get async => _database;
   CarsDatabse._init();
 
   Future<Database> get database async {

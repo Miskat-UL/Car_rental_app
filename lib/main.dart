@@ -1,4 +1,3 @@
-
 import 'package:car_rental_app/firebase_options.dart';
 
 import 'package:car_rental_app/screens/admin/admin_home.dart';
@@ -37,7 +36,7 @@ class MyApp extends StatelessWidget {
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            return BlogUi();
+            return const Root();
           } else {
             return const Center(
               child: CircularProgressIndicator(
@@ -76,7 +75,7 @@ class _RootState extends State<Root> {
                   .doc(snapshot.data!.uid)
                   .snapshots(),
               builder: (BuildContext context,
-                  AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  AsyncSnapshot<DocumentSnapshot> snapshot) { 
                 if (snapshot.hasData && snapshot.data != null) {
                   final user = snapshot.data!;
                   print(user['role']);

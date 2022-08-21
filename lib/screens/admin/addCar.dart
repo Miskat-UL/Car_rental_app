@@ -26,7 +26,7 @@ class _AddCarsState extends State<AddCars> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0XFFc4e8c2),
+        backgroundColor: const Color(0XFFc4e8c2),
         centerTitle: true,
         title: const Text("Add Car"),
       ),

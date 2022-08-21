@@ -1,4 +1,6 @@
+import 'package:car_rental_app/constants/country.dart';
 import 'package:car_rental_app/screens/admin/addCar.dart';
+import 'package:car_rental_app/screens/user/blog_page.dart';
 import 'package:car_rental_app/screens/user/builde.dart';
 import 'package:car_rental_app/screens/user/carosul_ex.dart';
 import 'package:car_rental_app/screens/user/singleCar.dart';
@@ -44,6 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           CarouselWithIndicatorDemo(),
           AddCars(),
+          BlogUi(),
+          CountryPicker(),
         ],
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
@@ -62,6 +66,14 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search, color: Colors.black),
             label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.playlist_add_outlined, color: Colors.black),
+            label: 'add blogs',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chrome_reader_mode, color: Colors.black),
+            label: 'blogs',
           ),
         ],
         onTap: pageChanger,
