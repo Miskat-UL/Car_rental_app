@@ -1,11 +1,10 @@
 import 'package:car_rental_app/constants/country.dart';
 import 'package:car_rental_app/screens/admin/addCar.dart';
 import 'package:car_rental_app/screens/user/blog_page.dart';
-import 'package:car_rental_app/screens/user/builde.dart';
 import 'package:car_rental_app/screens/user/carosul_ex.dart';
-import 'package:car_rental_app/screens/user/singleCar.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -21,7 +20,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _pageController = PageController();
   }
@@ -39,19 +37,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("j"),
-      // ),
       body: PageView(
-        children: [
-          CarouselWithIndicatorDemo(),
-          AddCars(),
-          BlogUi(),
-          CountryPicker(),
-        ],
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         onPageChanged: onPageChanged,
+        children: [
+          CarouselWithIndicatorDemo(),
+          const AddCars(),
+          const BlogUi(),
+          CountryPicker(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0XFFc4e8c2),
@@ -64,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.black),
+            icon: Icon(Icons.add, color: Colors.black),
             label: 'Search',
           ),
           BottomNavigationBarItem(

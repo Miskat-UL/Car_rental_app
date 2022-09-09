@@ -1,3 +1,4 @@
+import 'package:car_rental_app/main.dart';
 import 'package:car_rental_app/screens/user/home.dart';
 import 'package:car_rental_app/screens/authentication/login.dart';
 import 'package:car_rental_app/service/auth.dart';
@@ -129,9 +130,10 @@ class _RegisterState extends State<Register> {
                               );
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                  builder: (context) => Login(
-                                    auth: widget.auth,
-                                  ),
+                                  // builder: (context) => Login(
+                                  //   auth: widget.auth,
+                                  // ),
+                                  builder: (context) => const Root(),
                                 ),
                               );
                             }

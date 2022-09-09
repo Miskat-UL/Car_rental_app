@@ -13,7 +13,7 @@ class CarFields {
 }
 
 class Cars {
-  final int? id;
+  final String? id;
   String name;
   String model;
   String image;
@@ -33,9 +33,18 @@ class Cars {
   //     details: json['details'],
   //   );
   // }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'model': model,
+        'image': image,
+        'details': details,
+      };
+
   static Cars fromJson(Map<String, dynamic> json) {
     return Cars(
-      id: json[CarFields.id] as int?,
+      id: json[CarFields.id] as String?,
       name: json[CarFields.name] as String,
       model: json[CarFields.model] as String,
       image: json[CarFields.image] as String,
@@ -43,18 +52,18 @@ class Cars {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      CarFields.id: id,
-      CarFields.name: name,
-      CarFields.model: model,
-      CarFields.image: image,
-      CarFields.details: details,
-    };
-  }
+  // Map<String, dynamic> toJson() {
+  //   return {
+  //     CarFields.id: id,
+  //     CarFields.name: name,
+  //     CarFields.model: model,
+  //     CarFields.image: image,
+  //     CarFields.details: details,
+  //   };
+  // }
 
   Cars copy({
-    int? id,
+    String? id,
     String? name,
     String? model,
     String? image,

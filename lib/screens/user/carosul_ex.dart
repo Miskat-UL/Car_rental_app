@@ -3,6 +3,7 @@ import 'package:car_rental_app/models/cars.dart';
 import 'package:car_rental_app/screens/user/home.dart';
 import 'package:car_rental_app/screens/user/singleCar.dart';
 import 'package:car_rental_app/service/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -48,26 +49,26 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
     setState(() => isWaiting = false);
   }
 
-  List categoryList = [
-    Cars(
-        id: 1,
-        name: 'Homelander',
-        model: 'Cruser',
-        image: 'assets/1.png',
-        details: 'white'),
-    Cars(
-        id: 1,
-        name: 'Homelander',
-        model: 'Cruser',
-        image: 'assets/2.png',
-        details: 'black'),
-    Cars(
-        id: 1,
-        name: 'Homelander',
-        model: 'Cruser',
-        image: 'assets/1.png',
-        details: 'gold'),
-  ];
+  // List categoryList = [
+  //   Cars(
+  //       id: 1,
+  //       name: 'Homelander',
+  //       model: 'Cruser',
+  //       image: 'assets/1.png',
+  //       details: 'white'),
+  //   Cars(
+  //       id: 1,
+  //       name: 'Homelander',
+  //       model: 'Cruser',
+  //       image: 'assets/2.png',
+  //       details: 'black'),
+  //   Cars(
+  //       id: 1,
+  //       name: 'Homelander',
+  //       model: 'Cruser',
+  //       image: 'assets/1.png',
+  //       details: 'gold'),
+  // ];
   @override
   Widget build(BuildContext context) {
     final List<Widget> imageSliders = imgList
@@ -114,7 +115,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
         .toList();
 
     return Scaffold(
-      backgroundColor: Color(0XFFc4e8c2),
+      backgroundColor: const Color(0XFFc4e8c2),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -137,7 +138,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                           onPressed: () async {
                             await Auth(auth: _auth).signOut();
                           },
-                          icon: const Icon(Icons.add),
+                          icon: const Icon(Icons.logout),
                         ),
                       ],
                     ),
@@ -145,7 +146,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 30),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -236,7 +237,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
               ),
               Container(
                 width: 340,
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: const BoxDecoration(
                   color: Color(0xFF6bbd99),
                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -317,31 +318,48 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
               //     ],
               //   ),
               // ),
-              isWaiting
-                  ? Center(child: CircularProgressIndicator())
-                  : Container(
-                      height: 250,
-                      child: ListView.builder(
-                          itemCount: cars!.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SingleCar(cars: cars![index])));
-                              },
-                              child: SingleCars(
-                                name: cars![index].name,
-                                picture: cars![index].image,
-                                title: cars![index].model,
-                              ),
-                            );
-                          }),
-                    ),
-              TextButton(onPressed: () async {}, child: Icon(Icons.add)),
+              SizedBox(
+                  height: 250,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('cars')
+                        .snapshots(),
+                    builder: (context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SingleCar(
+                                      cars: snapshot.data!.docs[index].data()),
+                                ),
+                              );
+                            },
+                            child: SingleCars(
+                              name: snapshot.data!.docs[index]['name'],
+                              picture: snapshot.data!.docs[index]['image'],
+                              title: snapshot.data!.docs[index]['model'],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  )),
+              TextButton(
+                onPressed: () async {},
+                child: Icon(Icons.add),
+              ),
             ],
           ),
         ),
@@ -402,7 +420,13 @@ class SingleCars extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(top: 10),
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Hero(tag: "carHero", child: Image.asset(picture)),
+              height: 100,
+              child: Hero(
+                  tag: "carHero",
+                  child: Image.network(
+                    picture,
+                    fit: BoxFit.fill,
+                  )),
             ),
             const SizedBox(
               height: 5,

@@ -15,6 +15,7 @@ class UserHelper {
       'uid': user!.uid,
       'email': user.email,
       'name': user.displayName,
+      'image':user.photoURL,
       'last_login': user.metadata.lastSignInTime!.millisecondsSinceEpoch,
       'buildNumber': buildNumber,
       'created_at': user.metadata.creationTime!.millisecondsSinceEpoch,

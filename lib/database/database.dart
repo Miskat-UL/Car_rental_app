@@ -35,13 +35,13 @@ class CarsDatabse {
     );
   }
 
-  Future<Cars> create(Cars car) async {
-    final db = await instance.database;
-    // final id = await db
-    //     .rawInsert('INSERT INTO table_name ($columns) VALUES ($values)');
-    final id = await db.insert(tableName, car.toJson());
-    return car.copy(id: id);
-  }
+  // Future<Cars> create(Cars car) async {
+  //   final db = await instance.database;
+  //   // final id = await db
+  //   //     .rawInsert('INSERT INTO table_name ($columns) VALUES ($values)');
+  //   final id = await db.insert(tableName, car.toJson());
+  //   return car.copy(id: id);
+  // }
 
   Future<List<Cars>> getAll() async {
     final db = await instance.database;

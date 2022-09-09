@@ -4,7 +4,7 @@ import '../../models/cars.dart';
 
 class SingleCar extends StatefulWidget {
   const SingleCar({super.key, required this.cars});
-  final Cars cars;
+  final cars;
   @override
   State<SingleCar> createState() => _SingleCarState();
 }
@@ -38,12 +38,12 @@ class _SingleCarState extends State<SingleCar> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.cars.name,
+                                widget.cars['name'],
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                widget.cars.model,
+                                widget.cars['model'],
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Color.fromARGB(255, 90, 88, 88),
@@ -54,8 +54,8 @@ class _SingleCarState extends State<SingleCar> {
                         ),
                         Hero(
                           tag: "carHero",
-                          child: Image.asset(
-                            widget.cars.image,
+                          child: Image.network(
+                            widget.cars['image'],
                           ),
                         ),
                         Padding(
@@ -252,7 +252,7 @@ class _SingleCarState extends State<SingleCar> {
                                   ),
                                 ),
                                 Text(
-                                  'widget.cars.details',
+                                  widget.cars['details'],
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -286,7 +286,7 @@ class _SingleCarState extends State<SingleCar> {
                                 ),
                               ),
                               Text(
-                                widget.cars.details,
+                                widget.cars['details'],
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -319,7 +319,7 @@ class _SingleCarState extends State<SingleCar> {
                                 ),
                               ),
                               Text(
-                                widget.cars.details,
+                                widget.cars['details'],
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,

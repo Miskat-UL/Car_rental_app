@@ -1,12 +1,9 @@
 import 'package:car_rental_app/firebase_options.dart';
-
+import 'package:car_rental_app/screens/admin/addCar.dart';
 import 'package:car_rental_app/screens/admin/admin_home.dart';
-import 'package:car_rental_app/screens/user/blog_page.dart';
 import 'package:car_rental_app/screens/user/home.dart';
 import 'package:car_rental_app/screens/authentication/login.dart';
-
 import 'package:car_rental_app/service/auth.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -66,6 +63,7 @@ class _RootState extends State<Root> {
         stream: Auth(auth: _auth).user,
         builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
+            
             if (snapshot.data?.uid == null) {
               return Login(auth: _auth);
             }
@@ -78,11 +76,11 @@ class _RootState extends State<Root> {
                   AsyncSnapshot<DocumentSnapshot> snapshot) { 
                 if (snapshot.hasData && snapshot.data != null) {
                   final user = snapshot.data!;
-                  print(user['role']);
+                  // print(user['role']);
                   if (user['role'] == 'admin') {
                     return const AdminHome();
                   } else {
-                    return MyHomePage(auth: _auth);
+                    return MyHomePage(auth: _auth); 
                   }
                 }
                 return const Scaffold(

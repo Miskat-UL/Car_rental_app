@@ -81,6 +81,9 @@ class _LoginState extends State<Login> {
                               //     .pushReplacement(MaterialPageRoute(
                               //   builder: (_) => MyHomePage(auth: widget.auth),
                               // ));
+                            }else{
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(content: Text(res)));
                             }
                           },
                           child: const Text(
