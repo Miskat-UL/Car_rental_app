@@ -161,8 +161,8 @@ class _RegisterState extends State<Register> {
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                              builder: (context) => Login(
-                                    auth: widget.auth,
+                              builder: (context) => Register(
+                                    
                                   )),
                         );
                       },
